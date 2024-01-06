@@ -19,7 +19,7 @@ class TaskFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-      binding = FragmentTaskBinding.inflate(inflater, container, false)
+        binding = FragmentTaskBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -30,7 +30,7 @@ class TaskFragment : Fragment() {
                 title = binding.etTitle.text.toString(),
                 desc = binding.etDesc.text.toString()
             )
-           App.db.taskDao().insert(task)
+            App.db.taskDao().insert(task)
             findNavController().navigateUp()
         }
     }

@@ -9,6 +9,7 @@
 
     <EditText
         android:id="@+id/et_title"
+        android:background="@drawable/selctor_file"
         android:hint="Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
@@ -16,6 +17,7 @@
 
      <EditText
         android:id="@+id/et_desc"
+         android:background="@drawable/selctor_file"
         android:hint="Desc"
         android:layout_width="match_parent"
          android:layout_marginTop="12dp"

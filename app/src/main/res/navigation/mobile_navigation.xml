@@ -9,7 +9,15 @@
         android:id="@+id/navigation_home"
         android:name="com.example.taskmanager.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_taskFragment"
+            app:destination="@id/taskFragment">
+            <argument
+                android:name="taskId"
+                app:argType="integer" />
+        </action>
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_dashboard"
@@ -22,16 +30,24 @@
         android:name="com.example.taskmanager.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.taskmanager.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
+
     <fragment
         android:id="@+id/taskFragment"
         android:name="com.example.taskmanager.ui.task.TaskFragment"
         android:label="Task"
-        tools:layout="@layout/fragment_task" />
+        tools:layout="@layout/fragment_task" >
+        <argument
+            android:name="taskId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
+
     <fragment
         android:id="@+id/onBoardingFragment"
         android:name="com.example.taskmanager.ui.onboarding.OnBoardingFragment"
