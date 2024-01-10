@@ -5,13 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
-import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.findNavController
 import com.example.taskmanager.App
 import com.example.taskmanager.R
 import com.example.taskmanager.databinding.FragmentTaskBinding
 import com.example.taskmanager.model.Task
+import com.example.taskmanager.ui.home.HomeFragment
 
 class TaskFragment : Fragment() {
     private lateinit var binding: FragmentTaskBinding
@@ -25,18 +24,36 @@ class TaskFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val editTask = arguments?.getSerializable(HomeFragment.EDIT_TASK_KEY) as Task?
+        editTask?.let {
+            binding.etTitle.setText(it.title)
+            binding.etDesc.setText(it.desc)
+            binding.btnSave.text = getString(R.string.update)
+        }
         binding.btnSave.setOnClickListener {
-            val task = Task(
-                title = binding.etTitle.text.toString(),
-                desc = binding.etDesc.text.toString()
-            )
-            App.db.taskDao().insert(task)
+            if (editTask == null) {
+               save()
+            }else {
+                update(editTask)
+            }
             findNavController().navigateUp()
         }
     }
 
-    companion object {
-        const val TASK_REQUEST_KEY = "task.request.key"
-        const val TASK_KEY = "task_key"
+    private fun update(editTask: Task) {
+        App.db.taskDao().update(
+            editTask.copy(
+                title = binding.etTitle.text.toString(),
+                desc = binding.etDesc.text.toString()
+            )
+        )
+    }
+
+    private fun save() {
+        val task = Task(
+            title = binding.etTitle.text.toString(),
+            desc = binding.etDesc.text.toString()
+        )
+        App.db.taskDao().insert(task)
     }
 }

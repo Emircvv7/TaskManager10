@@ -1,14 +1,15 @@
 package com.example.taskmanager.ui.home.adapter
+
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskmanager.databinding.ItemTaskBinding
 import com.example.taskmanager.model.Task
-import com.example.taskmanager.ui.home.OnTaskLongClickListener
 
-class TaskAdapter(private val listener: OnTaskLongClickListener): RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
+class TaskAdapter(private val OnLongClick: (Task) -> Unit, private val OnClick: (Task) -> Unit):
+    RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
-    private val list = arrayListOf<Task>()
+    val list = arrayListOf<Task>()
 
     fun addTasks(tasks: List<Task>) {
         list.clear()
@@ -30,17 +31,21 @@ class TaskAdapter(private val listener: OnTaskLongClickListener): RecyclerView.A
     }
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
-        holder.bind(list[position], position)
+        holder.bind(list.get(position))
     }
 
     inner class TaskViewHolder(private val binding: ItemTaskBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(task: Task, position: Int) = with(binding){
+        fun bind(task: Task) = with(binding){
             tvTitle.text = task.title
             tvDesc.text = task.desc
 
             itemView.setOnLongClickListener {
-                listener.onTaskLongClick(task, position)
-                true
+                OnLongClick(task)
+                false
+            }
+
+            itemView.setOnClickListener {
+                OnClick(task)
             }
         }
     }
