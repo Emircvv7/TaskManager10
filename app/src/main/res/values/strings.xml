@@ -10,4 +10,8 @@
     <string name="yes">Да</string>
     <string name="no">Нет</string>
     <string name="update">Update</string>
+    <string name="code">Code</string>
+    <string name="verify_code">Verify Code</string>
+    <string name="send_code">Send Code</string>
+    <string name="phone">Phone</string>
 </resources>
